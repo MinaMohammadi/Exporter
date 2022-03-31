@@ -8,6 +8,7 @@ gauge_restapi_availability = Gauge("restapi_availability", "uptime value")
 gauge_gateway_availability = Gauge("gateway_availability", "uptime value")
 gauge_nginix_availability = Gauge("nginix_availability", "uptime value")
 gauge_internet_connection = Gauge("internet_connection", "uptime value")
+gauge_dns_check = Gauge("dns_check", "uptime value")
 
 def run_forever(metric):
     while True:
@@ -27,6 +28,8 @@ if __name__ == '__main__':
     threading.Thread(target=run_forever,
                      args=(gauge_nginix_availability,)).start()
     threading.Thread(target=run_forever,
-                     args=(gauge_internet_connection,)).start()                 
+                     args=(gauge_internet_connection,)).start()  
+    ding.Thread(target=run_forever,
+                     args=(gauge_dns_check,)).start()
     while True:
         sleep(2)
