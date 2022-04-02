@@ -69,8 +69,13 @@ def cal_internet_connection(metric):
         
     
 def cal_dns_check(metric):
-    hostname= "http://bukhara-chkh.ir"
-    dns= socket.gethostbyname(hostname)  
-
-    metric.set(dns)
+    hostname= "www.arvancloud.com"
+    dns= socket.gethostbyname(hostname)
+    if dns != 185.143.234.5:
+        print('DNS Failed')
+        metric.set(0)
+        return
+    else
+        metric.set(1)
+        return
 
