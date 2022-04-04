@@ -56,26 +56,23 @@ def cal_gateway_availability(metric):
     res = ping(GATEWAY_ADDR, interval=0.5, privileged=False)
     metric.set(res.is_alive)
 
+def cal_nginx_availability(metric):
+    NGINX_ADDR = os.environ.get("NGINX_ADDR")
+    res = urllib.request.urlopen(NGINX_ADDR)
 
-def cal_nginix_availability(metric):
-    Nginix_ADDR = "192.168.0.202"
-    ngx = ping(Nginix_ADDR, interval=0.5, privileged=False)
-    metric.set(ngx.is_alive)
+    metric.set(res.status == 200)
+
 
 def cal_internet_connection(metric):
-    internet= urllib.request.urlopen('http://google.com') 
+    EXTERNAL_ADDR = os.environ.get("EXTERNAL_ADDR")
+    res = urllib.request.urlopen(EXTERNAL_ADDR)
 
-    metric.set(internet.is_alive)
-        
-    
+    metric.set(res.status == 200)
+
+
 def cal_dns_check(metric):
-    hostname= "www.arvancloud.com"
-    dns= socket.gethostbyname(hostname)
-    if dns != 185.143.234.5:
-        print('DNS Failed')
-        metric.set(0)
-        return
-    else
-        metric.set(1)
-        return
+    DNS_ADDR = os.environ.get("DNS_ADDR")
+    DNS_IP = os.environ.get("DNS_IP")
+    ip = socket.gethostbyname(DNS_ADDR)
 
+    metric.set(ip == DNS_IP)
